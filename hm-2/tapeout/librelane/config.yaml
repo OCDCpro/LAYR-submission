@@ -1,0 +1,128 @@
+meta:
+  version: 3
+  flow: Chip
+  substituting_steps:
+    # Magic reports some overlaps which can be ignored
+    Checker.IllegalOverlap: null
+    # Not working correctly
+    #KLayout.SealRing: null
+    # Disable magic DRC
+    Magic.DRC: null
+    Checker.MagicDRC: null
+    # Disable KLayout density check
+    #KLayout.Density: null
+    #Checker.KLayoutDensity: null
+
+    # you can uncomment this for the flow to be faster. Comment it again in the final run.
+    #KLayout.DRC: null
+    #Checker.KLayoutDRC: null
+
+    # you can uncomment this for the flow to be faster. Comment it again in the final run.
+    #KLayout.Antenna: null
+    #Checker.KLayoutAntenna: null
+
+    # you can uncomment this for the flow to be faster. Comment it again in the final run.
+    #OpenROAD.IRDropReport: null
+    #KLayout.XOR: null
+    #Netgen.LVS: null
+    #Checker.LVS: null
+
+    #OpenRoad.FillInsertion: null
+
+DESIGN_NAME: hmteam2
+VERILOG_FILES:
+  - dir::../../src/rtl/aes128.v
+  - dir::../../src/rtl/chip.v
+  - dir::../../src/rtl/eeprom_controller.v
+  - dir::../../src/rtl/heartbeat.v
+  - dir::../../src/rtl/lfsr64.v
+  - dir::../../src/rtl/main_fsm.v
+  - dir::../../src/rtl/out_fsm.v
+  - dir::../../src/rtl/output_controller.v
+  - dir::../../src/rtl/rc_controller.v
+  - dir::../../src/rtl/spi_master.v
+  - dir::../../src/rtl/spi_selector.v
+  - dir::../../src/rtl/top.v
+
+USE_SLANG: true
+
+CLOCK_PERIOD: 10
+CLOCK_PORT: sys_clk_PAD
+CLOCK_NET: clk_pad/p2c
+
+FP_SIZING: absolute
+DIE_AREA: [0, 0, 2699, 2699]
+CORE_AREA: [378, 378, 2321, 2321]
+
+PDN_CORE_RING: true
+PDN_SKIPTRIM: true
+MAGIC_EXT_UNIQUE: notopports
+
+#VERILOG_POWER_DEFINE: USE_POWER_PINS
+
+VDD_NETS: ["VDD"]
+GND_NETS: ["VSS"]
+
+GRT_ALLOW_CONGESTION: true
+EXTRA_GDS:
+  - dir::../ip/bondpad/bondpad_70x70_novias.gds
+  - dir::../ip/bondpad/bondpad_70x70.gds
+EXTRA_LEFS:
+  - dir::../ip/bondpad/bondpad_70x70_novias.lef
+  - dir::../ip/bondpad/bondpad_70x70.lef
+IGNORE_DISCONNECTED_MODULES:
+  - bondpad_70x70
+  - bondpad_70x70_novias
+  - uart_tx_pad
+  - uart_rx_pad
+  - uart_clk_pad
+
+# Maximum metal width without slotting: 30um
+PDN_CORE_RING_VWIDTH: 15
+PDN_CORE_RING_HWIDTH: 15
+# Ensure minimum spacing for long metals
+PDN_CORE_RING_VSPACING: 5
+PDN_CORE_RING_HSPACING: 5
+
+PDN_CORE_RING_CONNECT_TO_PADS: True
+PDN_ENABLE_PINS: False
+
+PAD_NORTH:
+  [
+    "iovdd_pads\\[0\\].iovdd_pad",
+    "iovss_pads\\[0\\].iovss_pad",
+    "busy_pad",
+    "fault_pad",
+    "unlock_pad",
+    "vdd_pads\\[0\\].vdd_pad",
+  ]
+
+PAD_EAST:
+  [
+    "spi_rfid_ss_pad",
+    "spi_eeprom_pad",
+    "spi_miso_pad",
+    "spi_mosi_pad",
+    "spi_sclk_pad",
+    "vss_pads\\[0\\].vss_pad",
+  ]
+
+PAD_SOUTH:
+  [
+    "user_io_1_pad",
+    "user_io_2_pad",
+    "user_io_3_pad",
+    "user_io_4_pad",
+    "vdd_pads\\[1\\].vdd_pad",
+    "vss_pads\\[1\\].vss_pad",
+  ]
+
+PAD_WEST:
+  [
+    "uart_tx_pad",
+    "uart_rx_pad",
+    "user_io_0_pad",
+    "uart_clk_pad",
+    "clk_pad",
+    "rst_in_pad",
+  ]
