@@ -6,7 +6,7 @@
 AES-128 mutual authentication chip for the [LAYR Open Chip Challenge 25/26](https://github.com/OCDCpro/LAYR).
 Taped out in IHP SG13G2 130 nm BiCMOS using the LibreLane open-source ASIC flow.
 
-A full project report is available in [`Paper/main.pdf`](Paper/main.pdf).
+A full project report is available in [`docs/main.pdf`](docs/main.pdf).
 
 **Keywords:** ASIC · NFC · ISO 14443-4 · AES-128 · MFRC522 · APDU · SPI · EEPROM · IHP SG13G2 · LibreLane · SystemVerilog · Verilog
 
